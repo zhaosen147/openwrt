@@ -1,6 +1,6 @@
 --- a/db.txt
 +++ b/db.txt
-@@ -277,9 +277,8 @@ country CL: DFS-JP
+@@ -291,9 +291,8 @@ country CL: DFS-JP
  	(5735 - 5835 @ 80), (20)
  
  country CN: DFS-FCC
@@ -12,7 +12,7 @@
  	(5735 - 5835 @ 80), (30)
  	# 60 GHz band channels 1,4: 28dBm, channels 2,3: 44dBm
  	# ref: http://www.miit.gov.cn/n11293472/n11505629/n11506593/n11960250/n11960606/n11960700/n12330791.files/n12330790.pdf
-@@ -1237,9 +1236,8 @@ country UG: DFS-FCC
+@@ -1284,9 +1283,8 @@ country UG: DFS-FCC
  country US: DFS-FCC
  	(2402 - 2472 @ 40), (30)
  	# 5.15 ~ 5.25 GHz: 30 dBm for master mode, 23 dBm for clients
@@ -23,4 +23,4 @@
 +	(5490 - 5730 @ 160), (30)
  	(5735 - 5835 @ 80), (30)
  	# 60g band
- 	# reference: http://cfr.regstoday.com/47cfr15.aspx#47_CFR_15p255
+ 	# reference: section IV-D https://docs.fcc.gov/public/attachments/FCC-16-89A1.pdf
