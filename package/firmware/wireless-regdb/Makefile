@@ -19,6 +19,7 @@ define Package/wireless-regdb
 endef
 
 define Build/Compile
+	pip install future
 	python $(PKG_BUILD_DIR)/db2fw.py $(PKG_BUILD_DIR)/regulatory.db $(PKG_BUILD_DIR)/db.txt
 endef
 
