@@ -94,8 +94,8 @@ ramips_setup_interfaces()
 	dlink,dwr-922-e2|\
 	ew1200|\
 	firewrt|\
-	hc5661a|\
 	hc5962|\
+	hiwifi,hc5661a|\
 	hlk-rm04|\
 	k2p|\
 	kn|\
@@ -358,7 +358,8 @@ ramips_setup_interfaces()
 		ucidef_add_switch "switch0" \
 			"0:lan:4" "1:lan:3" "2:lan:2" "3:lan:1" "4:wan" "6@eth0"
 		;;
-	hc5761)
+	hc5761|\
+	hiwifi,hc5761a)
 		ucidef_add_switch "switch0" \
 			"1:lan" "4:lan" "0:wan" "6@eth0"
 		;;
@@ -572,8 +573,9 @@ ramips_setup_macs()
 		wan_mac=$(mtd_get_mac_binary factory 4)
 		;;
 	hc5*61|\
-	hc5661a|\
 	hc5962|\
+	hiwifi,hc5661a|\
+	hiwifi,hc5761a|\
 	hiwifi,hc5861b)
 		lan_mac=`mtd_get_mac_ascii bdinfo "Vfac_mac "`
 		[ -n "$lan_mac" ] || lan_mac=$(cat /sys/class/net/eth0/address)

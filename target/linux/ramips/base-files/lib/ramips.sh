@@ -217,9 +217,6 @@ ramips_board_detect() {
 	*"HC5661")
 		name="hc5661"
 		;;
-	*"HC5661A")
-		name="hc5661a"
-		;;
 	*"HC5761")
 		name="hc5761"
 		;;

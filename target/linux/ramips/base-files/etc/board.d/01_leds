@@ -60,8 +60,7 @@ asl26555-16M)
 	ucidef_set_led_netdev "eth" "ETH" "asl26555:green:eth" "eth0"
 	set_wifi_led "asl26555:green:wlan"
 	;;
-bdcom,wap2100-sk|\
-hiwifi,hc5861b)
+bdcom,wap2100-sk)
 	set_wifi_led "$boardname:green:wlan2g"
 	;;
 belkin,f9k1109v1)
@@ -187,8 +186,7 @@ gl-mt300n-v2)
 	set_wifi_led "$boardname:red:wlan"
 	ucidef_set_led_switch "wan" "wan" "$boardname:green:wan" "switch0" "0x1"
 	;;
-hc5661|\
-hc5661a)
+hc5661)
 	ucidef_set_led_netdev "internet" "internet" "$boardname:blue:internet" "eth0.2"
 	set_wifi_led "$boardname:blue:wlan2g"
 	;;
@@ -258,6 +256,8 @@ netgear,r6120)
 	ucidef_set_led_wlan "wlan2g" "WiFi 2.4GHz" "$boardname:green:wlan2g" "phy0tpt"
 	;;
 gehua,ghl-r-001|\
+hiwifi,hc5661a|\
+hiwifi,hc5761a|\
 pbr-m1)
 	ucidef_set_led_netdev "internet" "internet" "$boardname:blue:internet" "eth0.2"
 	;;

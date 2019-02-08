@@ -71,12 +71,21 @@ define Device/glinet_vixmini
 endef
 TARGET_DEVICES += glinet_vixmini
 
-define Device/hc5661a
+define Device/hiwifi_hc5661a
   DTS := HC5661A
-  IMAGE_SIZE := $(ralink_default_fw_size_16M)
+  IMAGE_SIZE := 15808k
+  SUPPORTED_DEVICES := hc5661a
   DEVICE_TITLE := HiWiFi HC5661A
 endef
-TARGET_DEVICES += hc5661a
+TARGET_DEVICES += hiwifi_hc5661a
+
+define Device/hiwifi_hc5761a
+  DTS := HC5761A
+  IMAGE_SIZE := 15808k
+  DEVICE_TITLE := HiWiFi HC5761A
+  DEVICE_PACKAGES := kmod-mt76x0e kmod-usb2 kmod-usb-ohci
+endef
+TARGET_DEVICES += hiwifi_hc5761a
 
 define Device/hilink_hlk-7628n
   DTS := HLK-7628N
