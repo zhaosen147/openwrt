@@ -156,6 +156,14 @@ define Device/pbr-d1
 endef
 TARGET_DEVICES += pbr-d1
 
+define Device/r600n-m
+  DTS := R600N-M
+  IMAGE_SIZE := $(ralink_default_fw_size_4M)
+  DEVICE_TITLE := R600N-M
+  DEVICE_PACKAGES := kmod-usb2 kmod-usb-ohci
+endef
+TARGET_DEVICES += r600n-m
+
 define Device/skylab_skw92a
   DTS := SKW92A
   IMAGE_SIZE := 16064k
