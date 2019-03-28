@@ -374,4 +374,15 @@ define Device/zyxel_wre6606
 endef
 TARGET_DEVICES += zyxel_wre6606
 
+define Device/ig_cap108
+	$(call Device/FitzImage)
+	DEVICE_TITLE := IG CAP108
+	DEVICE_DTS := qcom-ipq4029-cap108
+	KERNEL_SIZE := 4096k
+	IMAGE_SIZE := 31232k
+	IMAGES := sysupgrade.bin
+	IMAGE/sysupgrade.bin := append-kernel | append-rootfs | pad-rootfs | append-metadata
+endef
+TARGET_DEVICES += ig_cap108
+
 $(eval $(call BuildImage))
