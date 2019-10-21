@@ -48,12 +48,6 @@
 			qcom,usb-hsphy-mode-select = <TCSR_USB_HSPHY_HOST_MODE>;
 		};
 
-		ess_tcsr@1953000 {
-			compatible = "qcom,tcsr";
-			reg = <0x1953000 0x1000>;
-			qcom,ess-interface-select = <TCSR_ESS_PSGMII>;
-		};
-
 		tcsr@1957000 {
 			compatible = "qcom,tcsr";
 			reg = <0x1957000 0x100>;
@@ -98,14 +92,6 @@
 		};
 
 		watchdog@b017000 {
-			status = "okay";
-		};
-
-		ess-switch@c000000 {
-			status = "okay";
-		};
-
-		edma@c080000 {
 			status = "okay";
 		};
 	};
@@ -198,12 +184,26 @@
 	status = "okay";
 };
 
-&gmac0 {
-	mtd-mac-address = <&art 0x1006>;
+&ess {
+	status = "okay";
+
+	ports {
+		/delete-node/ port@1;
+		/delete-node/ port@2;
+
+		port@3 {
+			label = "lan2";
+		};
+
+		port@4 {
+			label = "lan1";
+		};
+	};
 };
 
-&gmac1 {
-	mtd-mac-address = <&art 0x5006>;
+&gmac {
+	status = "okay";
+	mtd-mac-address = <&art 0x1006>;
 };
 
 &nand {
@@ -297,6 +297,10 @@
 			};
 		};
 	};
+};
+
+&psgmii_phy {
+	status = "okay";
 };
 
 &qpic_bam {
