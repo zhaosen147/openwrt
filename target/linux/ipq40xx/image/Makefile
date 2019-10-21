@@ -392,7 +392,6 @@ define Device/p2w_r619ac
 	IMAGE/nand-factory.bin := append-ubi | qsdk-ipq-factory-nand
 	DEVICE_PACKAGES := ipq-wifi-p2w_r619ac
 endef
-TARGET_DEVICES += p2w_r619ac
 
 define Device/qcom_ap-dk01.1-c1
 	DEVICE_VENDOR := Qualcomm Atheros
