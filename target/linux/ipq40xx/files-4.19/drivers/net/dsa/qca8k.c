@@ -1149,7 +1149,7 @@ ar40xx_psgmii_self_test_clean(struct qca8k_priv *priv)
 	mdiobus_write(bus, 0x1f, 0x10, 0x6860);
 	mdiobus_write(bus, 0x1f, MII_BMCR, BMCR_ANENABLE | BMCR_RESET |
 					   BMCR_SPEED1000);
-
+	qca8k_phy_mmd_write(priv, 0x1f, 7, 0x8076, 0x0670); /* 1000_LED_n */
 	for (phy = 0; phy < AR40XX_NUM_PORTS - 1; phy++) {
 		/* disable mac loop back */
 		qca8k_rmw(priv, AR40XX_REG_PORT_LOOKUP(phy + 1),
