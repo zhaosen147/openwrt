@@ -159,7 +159,7 @@
 				read-only;
 			};
 
-			partition@170000 {
+			art: partition@170000 {
 				label = "ART";
 				reg = <0x170000 0x10000>;
 				read-only;
@@ -193,6 +193,7 @@
 
 &gmac {
        status = "okay";
+       mtd-mac-address = <&art 0x0>;
 };
 
 &essport1 {
