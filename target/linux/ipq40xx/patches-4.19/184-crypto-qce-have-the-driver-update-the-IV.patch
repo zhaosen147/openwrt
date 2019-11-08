@@ -1,0 +1,77 @@
+From f4d62a3544f98b1bc22621ed5b97fbf7c4f44877 Mon Sep 17 00:00:00 2001
+From: Eneas U de Queiroz <cotequeiroz@gmail.com>
+Date: Mon, 28 Oct 2019 08:51:08 -0300
+Subject: [PATCH 4/5] crypto: qce - have the driver update the IV
+
+Update the IV after the completion of each cipher operation.
+
+Signed-off-by: Eneas U de Queiroz <cotequeiroz@gmail.com>
+
+diff --git a/drivers/crypto/qce/cipher.h b/drivers/crypto/qce/cipher.h
+index f93fab1dd1ff..f07de9d9e848 100644
+--- a/drivers/crypto/qce/cipher.h
++++ b/drivers/crypto/qce/cipher.h
+@@ -51,6 +51,7 @@ struct qce_cipher_reqctx {
+ 	struct sg_table src_tbl;
+ 	struct scatterlist *src_sg;
+ 	unsigned int cryptlen;
++	u8 saved_iv[QCE_MAX_IV_SIZE];
+ };
+ 
+ static inline struct qce_alg_template *to_cipher_tmpl(struct crypto_skcipher *tfm)
+diff --git a/drivers/crypto/qce/skcipher.c b/drivers/crypto/qce/skcipher.c
+index 0776286cfc9e..3259d1724664 100644
+--- a/drivers/crypto/qce/skcipher.c
++++ b/drivers/crypto/qce/skcipher.c
+@@ -22,6 +22,20 @@
+ 
+ static LIST_HEAD(skcipher_algs);
+ 
++static void qce_update_ctr_iv(u8 *iv, unsigned int ivsize, u32 add)
++{
++	__be32 *a = (__be32 *)(iv + ivsize);
++	u32 b;
++
++	for (; ivsize >= 4; ivsize -= 4) {
++		b = be32_to_cpu(*--a) + add;
++		*a = cpu_to_be32(b);
++		if (b >= add)
++			return;
++		add = 1;
++	}
++}
++
+ static void qce_skcipher_done(void *data)
+ {
+ 	struct crypto_async_request *async_req = data;
+@@ -47,6 +61,18 @@ static void qce_skcipher_done(void *data)
+ 		dma_unmap_sg(qce->dev, rctx->src_sg, rctx->src_nents, dir_src);
+ 	dma_unmap_sg(qce->dev, rctx->dst_sg, rctx->dst_nents, dir_dst);
+ 
++	if (IS_CBC(rctx->flags)) {
++		if (IS_ENCRYPT(rctx->flags))
++			sg_pcopy_to_buffer(rctx->dst_sg, rctx->dst_nents,
++					   rctx->iv, rctx->ivsize,
++					   rctx->cryptlen - rctx->ivsize);
++		else
++			memcpy(rctx->iv, rctx->saved_iv, rctx->ivsize);
++	} else if (IS_CTR(rctx->flags) && IS_AES(rctx->flags)) {
++		qce_update_ctr_iv(rctx->iv, rctx->ivsize,
++				  DIV_ROUND_UP(rctx->cryptlen, AES_BLOCK_SIZE));
++	}
++
+ 	sg_free_table(&rctx->dst_tbl);
+ 
+ 	error = qce_check_status(qce, &status);
+@@ -139,6 +165,11 @@ qce_skcipher_async_req_handle(struct crypto_async_request *async_req)
+ 
+ 	qce_dma_issue_pending(&qce->dma);
+ 
++	if (IS_CBC(rctx->flags) && IS_DECRYPT(rctx->flags))
++		sg_pcopy_to_buffer(rctx->src_sg, rctx->src_nents,
++				   rctx->saved_iv, rctx->ivsize,
++				   rctx->cryptlen - rctx->ivsize);
++
+ 	ret = qce_start(async_req, tmpl->crypto_alg_type, req->cryptlen, 0);
+ 	if (ret)
+ 		goto error_terminate;
