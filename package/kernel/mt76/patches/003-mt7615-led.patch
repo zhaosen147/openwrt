@@ -1,0 +1,17 @@
+From e1cb717eb6c5f0f5f616edfd77670e00dcad1391 Mon Sep 17 00:00:00 2001
+From: Lorenzo Bianconi <lorenzo.bianconi@redhat.com>
+Date: Mon, 9 Dec 2019 18:16:50 +0100
+Subject: [PATCH] mt7615: fix LED support (copy CFLAGS from main Makefile)
+
+---
+ mt7615/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+--- a/mt7615/Makefile
++++ b/mt7615/Makefile
+@@ -1,4 +1,5 @@
+ #SPDX-License-Identifier: ISC
++EXTRA_CFLAGS += -Werror -DCONFIG_MT76_LEDS
+ 
+ obj-$(CONFIG_MT7615E) += mt7615e.o
+ 
