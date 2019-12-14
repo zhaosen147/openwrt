@@ -1,0 +1,19 @@
+#!/bin/ash
+
+[ "$ACTION" = "add" ] || exit 0
+
+PHYNBR=${DEVPATH##*/phy}
+
+[ -n $PHYNBR ] || exit 0
+
+. /lib/functions.sh
+. /lib/functions/system.sh
+
+board=$(board_name)
+
+case "$board" in
+	jdcloud,re-sp-01b)
+		label_mac=$(mtd_get_mac_ascii config "mac")
+		echo $(macaddr_add $label_mac $PHYNBR) > /sys${DEVPATH}/macaddress
+		;;
+esac
