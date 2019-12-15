@@ -484,6 +484,26 @@ endef
 $(eval $(call KernelPackage,nbd))
 
 
+define KernelPackage/nvme
+  SUBMENU:=$(BLOCK_MENU)
+  TITLE:=NVM Express support
+  DEPENDS:=@PCI_SUPPORT
+  KCONFIG:= \
+	CONFIG_NVME_CORE \
+	CONFIG_BLK_DEV_NVME
+  FILES:= \
+	$(LINUX_DIR)/drivers/nvme/host/nvme-core.ko \
+	$(LINUX_DIR)/drivers/nvme/host/nvme.ko
+  AUTOLOAD:=$(call AutoLoad,30,nvme)
+endef
+
+define KernelPackage/nvme/description
+ Kernel module for NVM Express support
+endef
+
+$(eval $(call KernelPackage,nvme))
+
+
 define KernelPackage/scsi-core
   SUBMENU:=$(BLOCK_MENU)
   TITLE:=SCSI device support
