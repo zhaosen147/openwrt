@@ -13,7 +13,7 @@ LED support in mt7615 driver
 
 --- a/mt7615/init.c
 +++ b/mt7615/init.c
-@@ -203,6 +203,58 @@ static const struct ieee80211_iface_comb
+@@ -215,6 +215,58 @@ static const struct ieee80211_iface_comb
  };
  
  static void
@@ -72,22 +72,23 @@ LED support in mt7615 driver
  mt7615_init_txpower(struct mt7615_dev *dev,
  		    struct ieee80211_supported_band *sband)
  {
-@@ -295,6 +347,12 @@ int mt7615_register_device(struct mt7615
- 	wiphy->reg_notifier = mt7615_regd_notifier;
- 	wiphy->flags |= WIPHY_FLAG_HAS_CHANNEL_SWITCH;
+@@ -393,6 +445,13 @@ int mt7615_register_device(struct mt7615
+ 		return ret;
  
+ 	mt7615_init_wiphy(hw);
++
 +	/* init led callbacks */
 +	if (IS_ENABLED(CONFIG_MT76_LEDS)) {
 +		dev->mt76.led_cdev.brightness_set = mt7615_led_set_brightness;
 +		dev->mt76.led_cdev.blink_set = mt7615_led_set_blink;
 +	}
 +
- 	ieee80211_hw_set(hw, SUPPORTS_REORDERING_BUFFER);
- 	ieee80211_hw_set(hw, TX_STATUS_NO_AMPDU_LEN);
- 
+ 	dev->mphy.sband_2g.sband.ht_cap.cap |= IEEE80211_HT_CAP_LDPC_CODING;
+ 	dev->mphy.sband_5g.sband.ht_cap.cap |= IEEE80211_HT_CAP_LDPC_CODING;
+ 	dev->mphy.sband_5g.sband.vht_cap.cap |=
 --- a/mt7615/regs.h
 +++ b/mt7615/regs.h
-@@ -309,6 +309,33 @@
+@@ -351,6 +351,33 @@
  
  #define MT_TX_AGG_CNT(n)		MT_WF_MIB(0xa8 + ((n) << 2))
  
