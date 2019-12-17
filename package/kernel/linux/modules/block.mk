@@ -490,7 +490,8 @@ define KernelPackage/nvme
   DEPENDS:=@PCI_SUPPORT
   KCONFIG:= \
 	CONFIG_NVME_CORE \
-	CONFIG_BLK_DEV_NVME
+	CONFIG_BLK_DEV_NVME \
+	CONFIG_NVME_MULTIPATH=n
   FILES:= \
 	$(LINUX_DIR)/drivers/nvme/host/nvme-core.ko \
 	$(LINUX_DIR)/drivers/nvme/host/nvme.ko
