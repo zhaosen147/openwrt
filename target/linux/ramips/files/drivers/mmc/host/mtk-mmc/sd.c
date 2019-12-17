@@ -2409,6 +2409,7 @@ static int msdc_drv_resume(struct platform_device *pdev)
 
 static const struct of_device_id mt7620_sdhci_match[] = {
 	{ .compatible = "ralink,mt7620-sdhci" },
+	{ .compatible = "mediatek,mt7620-mmc" },
 	{},
 };
 MODULE_DEVICE_TABLE(of, mt7620_sdhci_match);
