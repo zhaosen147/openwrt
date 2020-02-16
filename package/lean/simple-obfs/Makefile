@@ -58,6 +58,7 @@ endef
 
 Package/simple-obfs-server/description = $(Package/simple-obfs/description)
 
+TARGET_CFLAGS += -Wno-error=stringop-overflow
 CONFIGURE_ARGS += \
 	--disable-ssp \
 	--disable-documentation \
