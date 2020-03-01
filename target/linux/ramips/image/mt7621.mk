@@ -450,7 +450,7 @@ define Device/lenovo_newifi-d1
   IMAGE_SIZE := 32448k
   DEVICE_VENDOR := Newifi
   DEVICE_MODEL := D1
-  DEVICE_PACKAGES := kmod-mt7603 kmod-mt76x2 kmod-usb3 kmod-sdhci-mt7620 \
+  DEVICE_PACKAGES := -swconfig kmod-mt7603 kmod-mt76x2 kmod-usb3 kmod-sdhci-mt7620 \
 	kmod-usb-ledtrig-usbport wpad-basic
   SUPPORTED_DEVICES += newifi-d1
 endef

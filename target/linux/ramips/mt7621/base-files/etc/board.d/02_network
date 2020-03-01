@@ -107,10 +107,6 @@ ramips_setup_interfaces()
 		ucidef_add_switch "switch0" \
 			"1:lan" "2:lan" "3:lan" "4:wan" "6@eth0"
 		;;
-	lenovo,newifi-d1)
-		ucidef_add_switch "switch0" \
-		"1:lan:2" "2:lan:1" "4:wan" "6@eth0"
-		;;
 	linksys,re6500)
 		ucidef_add_switch "switch0" \
 			"0:lan:1" "1:lan:2" "2:lan:3" "3:lan:4" "6@eth0"
@@ -132,6 +128,7 @@ ramips_setup_interfaces()
 		ucidef_add_switch "switch0" \
 			"0:lan" "6@eth0"
 		;;
+	lenovo,newifi-d1|\
 	xiaomi,mir3g)
 		ucidef_set_interfaces_lan_wan "lan1 lan2" "wan"
 		;;
@@ -180,7 +177,6 @@ ramips_setup_macs()
 	elecom,wrc-1167ghbk2-s|\
 	elecom,wrc-1900gst|\
 	elecom,wrc-2533gst|\
-	lenovo,newifi-d1|\
 	netis,wf2881|\
 	phicomm,k2p|\
 	planex,vr500|\
