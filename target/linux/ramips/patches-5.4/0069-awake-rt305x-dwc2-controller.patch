@@ -1,6 +1,6 @@
 --- a/drivers/usb/dwc2/platform.c
 +++ b/drivers/usb/dwc2/platform.c
-@@ -438,6 +438,12 @@ static int dwc2_driver_probe(struct plat
+@@ -432,6 +432,12 @@ static int dwc2_driver_probe(struct plat
  
  	hsotg->needs_byte_swap = dwc2_check_core_endianness(hsotg);
  
