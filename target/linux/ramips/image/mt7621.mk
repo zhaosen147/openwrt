@@ -821,15 +821,17 @@ define Device/xiaomi_mir3g
   KERNEL_SIZE := 4096k
   IMAGE_SIZE := 124416k
   UBINIZE_OPTS := -E 5
-  IMAGES += kernel1.bin rootfs0.bin
+  IMAGES += kernel1.bin rootfs0.bin breed-factory.bin
   IMAGE/kernel1.bin := append-kernel
   IMAGE/rootfs0.bin := append-ubi | check-size $$$$(IMAGE_SIZE)
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+  IMAGE/breed-factory.bin := append-kernel | pad-to $$(KERNEL_SIZE) | append-kernel | pad-to $$(KERNEL_SIZE) | \
+	append-ubi | check-size $$$$(IMAGE_SIZE)
   DEVICE_VENDOR := Xiaomi
   DEVICE_MODEL := Mi Router 3G
   SUPPORTED_DEVICES += R3G
   SUPPORTED_DEVICES += mir3g
-  DEVICE_PACKAGES := kmod-mt7603 kmod-mt76x2 kmod-usb3 \
+  DEVICE_PACKAGES := -swconfig kmod-mt7603 kmod-mt76x2 kmod-usb3 \
 	kmod-usb-ledtrig-usbport wpad-basic uboot-envtools
 endef
 TARGET_DEVICES += xiaomi_mir3g
