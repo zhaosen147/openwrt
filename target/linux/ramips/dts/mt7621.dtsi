@@ -439,15 +439,7 @@
 
 		compatible = "mediatek,mt7621-nfc";
 		bank-width = <2>;
-		reg = <0x1e003000 0x800>;
-
-		ecc-engine = <&bch>;
-
-		resets = <&rstctrl 15>;
-		reset-names = "nfi";
-
-		interrupt-parent = <&gic>;
-		interrupts = <GIC_SHARED 14 IRQ_TYPE_LEVEL_HIGH>;
+		reg = <0x1e003000 0x800 0x1e003800 0x800>;
 	};
 
 	bch: ecc@1e003800 {
