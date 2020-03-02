@@ -26,7 +26,6 @@ ramips_setup_interfaces()
 	totolink,a7000r|\
 	unielec,u7621-06-16m|\
 	unielec,u7621-06-64m|\
-	xiaoyu,xy-c5|\
 	xzwifi,creativebox-v1|\
 	youku,yk-l2|\
 	zbtlink,zbt-we1326|\
@@ -85,6 +84,7 @@ ramips_setup_interfaces()
 		ucidef_add_switch "switch0" \
 			"0:lan:1" "1:lan:2" "2:lan:3" "3:lan:4" "4:wan:5" "6@eth0"
 		;;
+	xiaoyu,xy-c5|\
 	dlink,dir-878-a1)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3 lan4" "wan"
 		;;
@@ -214,8 +214,7 @@ ramips_setup_macs()
 	iodata,wn-gx300gr|\
 	mtc,wr1201|\
 	netgear,r6220|\
-	netgear,wndr3700-v5|\
-	xiaoyu,xy-c5)
+	netgear,wndr3700-v5)
 		wan_mac=$(macaddr_add "$(mtd_get_mac_binary factory 0x4)" 1)
 		;;
 	iodata,wn-ax1167gr2|\
