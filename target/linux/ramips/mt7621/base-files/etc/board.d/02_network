@@ -95,8 +95,7 @@ ramips_setup_interfaces()
 			"1:lan:4" "2:lan:3" "3:lan:2" "4:lan:1" "0:wan" "6@eth0"
 		;;
 	gehua,ghl-r-001)
-		ucidef_add_switch "switch0" \
-			"0:lan" "1:lan" "2:lan" "4:wan" "6@eth0"
+		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
 		;;
 	gnubee,gb-pc1|\
 	gnubee,gb-pc2)
@@ -161,7 +160,6 @@ ramips_setup_macs()
 	asiarf,ap7621-001|\
 	asiarf,ap7621-nv1|\
 	firefly,firewrt|\
-	gehua,ghl-r-001|\
 	mqmaker,witi|\
 	totolink,a7000r|\
 	unielec,u7621-06-16m|\
