@@ -19,7 +19,7 @@ inbound = (local_port ~= "0") and {
 		followRedirect = true
 	},
 	sniffing = {
-		enabled = true,
+		enabled = false,
 		destOverride = { "http", "tls" }
 	}
 } or nil,
