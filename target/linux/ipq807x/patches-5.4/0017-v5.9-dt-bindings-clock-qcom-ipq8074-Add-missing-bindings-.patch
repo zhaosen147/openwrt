@@ -1,0 +1,30 @@
+From e7fb524cfccaf649b257d517f437392f50b3931f Mon Sep 17 00:00:00 2001
+From: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+Date: Sun, 5 Jul 2020 14:47:54 +0530
+Subject: [PATCH] dt-bindings: clock: qcom: ipq8074: Add missing bindings for
+ PCIe
+
+Add missing clock bindings for PCIe port0 of ipq8074.
+
+Co-developed-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+Signed-off-by: Sivaprakash Murugesan <sivaprak@codeaurora.org>
+Link: https://lore.kernel.org/r/1593940680-2363-4-git-send-email-sivaprak@codeaurora.org
+[sboyd@kernel.org: Clean up commit text subject]
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+---
+ include/dt-bindings/clock/qcom,gcc-ipq8074.h | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+--- a/include/dt-bindings/clock/qcom,gcc-ipq8074.h
++++ b/include/dt-bindings/clock/qcom,gcc-ipq8074.h
+@@ -362,5 +362,9 @@
+ #define GCC_PCIE1_AXI_SLAVE_ARES		128
+ #define GCC_PCIE1_AHB_ARES			129
+ #define GCC_PCIE1_AXI_MASTER_STICKY_ARES	130
++#define GCC_PCIE0_AXI_SLAVE_STICKY_ARES		131
++#define GCC_PCIE0_AXI_S_BRIDGE_CLK		132
++#define GCC_PCIE0_RCHNG_CLK_SRC			133
++#define GCC_PCIE0_RCHNG_CLK			134
+ 
+ #endif

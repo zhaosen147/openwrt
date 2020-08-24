@@ -65,10 +65,10 @@ Acked-by: Stephen Boyd <sboyd@kernel.org>
 
 --- a/include/dt-bindings/clock/qcom,gcc-ipq8074.h
 +++ b/include/dt-bindings/clock/qcom,gcc-ipq8074.h
-@@ -362,5 +362,6 @@
- #define GCC_PCIE1_AXI_SLAVE_ARES		128
+@@ -366,5 +366,6 @@
  #define GCC_PCIE1_AHB_ARES			129
  #define GCC_PCIE1_AXI_MASTER_STICKY_ARES	130
+ #define GCC_PCIE0_AXI_SLAVE_STICKY_ARES		131
 +#define GCC_WCSSAON_RESET			132
  
  #endif
