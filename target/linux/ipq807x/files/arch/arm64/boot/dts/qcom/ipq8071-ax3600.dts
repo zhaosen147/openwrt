@@ -245,6 +245,15 @@
 	status = "okay";
 };
 
+&qmp_pcie_phy1 {
+	status = "okay";
+};
+
+&pcie1 {
+	status = "okay";
+	perst-gpio = <&tlmm 61 GPIO_ACTIVE_LOW>;
+};
+
 &tlmm {
 	button_pins: button-pins {
 		pins = "gpio34";
