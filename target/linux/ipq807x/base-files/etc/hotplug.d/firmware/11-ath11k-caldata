@@ -1,0 +1,18 @@
+#!/bin/sh -x
+
+[ -e /lib/firmware/$FIRMWARE ] && exit 0
+
+. /lib/functions/caldata.sh
+
+board=$(board_name)
+
+case "$FIRMWARE" in
+"IPQ8074/caldata.bin")
+	case "$board" in
+	*)
+	esac
+	;;
+*)
+	exit 1
+	;;
+esac
