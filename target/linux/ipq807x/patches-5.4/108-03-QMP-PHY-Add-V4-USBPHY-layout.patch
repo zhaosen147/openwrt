@@ -1,0 +1,38 @@
+From a7c3c1c2b140eaa46a3327a76f527b20496c004e Mon Sep 17 00:00:00 2001
+From: Robert Marko <robimarko@gmail.com>
+Date: Tue, 25 Aug 2020 15:19:33 +0200
+Subject: [PATCH] QMP PHY: Add V4 USBPHY layout
+
+This is needed for IPQ8074 GEN3 PCI-E
+
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+@@ -120,6 +120,7 @@ enum qphy_reg_layout {
+ 	QPHY_PCS_AUTONOMOUS_MODE_CTRL,
+ 	QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR,
+ 	QPHY_PCS_LFPS_RXTERM_IRQ_STATUS,
++	QPHY_PCS_POWER_DOWN_CONTROL,
+ 	/* Keep last to ensure regs_layout arrays are properly initialized */
+ 	QPHY_LAYOUT_SIZE
+ };
+@@ -163,6 +164,15 @@ static const unsigned int qmp_v3_usb3phy
+ 	[QPHY_PCS_LFPS_RXTERM_IRQ_STATUS] = 0x170,
+ };
+ 
++static const unsigned int qmp_v4_usb3phy_regs_layout[QPHY_LAYOUT_SIZE] = {
++	[QPHY_SW_RESET]			= 0x00,
++	[QPHY_START_CTRL]		= 0x44,
++	[QPHY_PCS_STATUS]		= 0x14,
++	[QPHY_PCS_POWER_DOWN_CONTROL]	= 0x40,
++	[QPHY_PCS_AUTONOMOUS_MODE_CTRL]	= 0x308,
++	[QPHY_PCS_LFPS_RXTERM_IRQ_CLEAR] = 0x314,
++};
++
+ static const unsigned int sdm845_ufsphy_regs_layout[QPHY_LAYOUT_SIZE] = {
+ 	[QPHY_START_CTRL]		= 0x00,
+ 	[QPHY_PCS_READY_STATUS]		= 0x160,

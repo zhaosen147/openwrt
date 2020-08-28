@@ -245,13 +245,13 @@
 	status = "okay";
 };
 
-&qmp_pcie_phy1 {
+&qmp_pcie_phy0 {
 	status = "okay";
 };
 
-&pcie1 {
+&pcie0 {
 	status = "okay";
-	perst-gpio = <&tlmm 61 GPIO_ACTIVE_LOW>;
+	perst-gpio = <&tlmm 52 GPIO_ACTIVE_HIGH>;
 };
 
 &tlmm {
