@@ -51,7 +51,7 @@ define KernelPackage/$(PKG_NAME)/Default
   URL:=http://www.qca.qualcomm.com
   MAINTAINER:=Qualcomm Atheros
   TITLE:=QCA Wireless LAN Driver
-  DEPENDS:=+libgcc +libc +wireless-tools +librt +iproute2 +libxml2 \
+  DEPENDS:=+libgcc +libc +wireless-tools +librt +ip +libxml2 \
 	  @(!(PACKAGE_kmod-ath&&PACKAGE_kmod-mac80211))
   FILES:= $(strip $(QCAWLAN_MODULE_LIST))
   MENU:=1
