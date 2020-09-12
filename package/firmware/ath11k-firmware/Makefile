@@ -57,9 +57,6 @@ endef
 define Package/ath11k-firmware-ipq8074/install
 	$(INSTALL_DIR) $(1)/lib/firmware/IPQ8074
 	$(INSTALL_DATA) \
-		$(PKG_BUILD_DIR)/IPQ8074/hw2.0/board-2.bin \
-		$(1)/lib/firmware/IPQ8074/
-	$(INSTALL_DATA) \
 		$(PKG_BUILD_DIR)/IPQ8074/hw2.0/testing/2.4.0.1.r1/WLAN.HK.2.4.0.1.r1-00019-QCAHKSWPL_SILICONZ-1/* \
 		$(1)/lib/firmware/IPQ8074
 endef
