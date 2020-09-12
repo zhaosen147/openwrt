@@ -39,7 +39,7 @@ endef
 
 define ath11k-wifi-install-one-to
   $(INSTALL_DIR)  $(2)/lib/firmware/$(3)/
-  $(INSTALL_DATA) $(1) $(2)/lib/firmware/$(3)/board.bin
+  $(INSTALL_DATA) $(1) $(2)/lib/firmware/$(3)/bdwlan.bin
 endef
 
 define ath11k-wifi-install-one
