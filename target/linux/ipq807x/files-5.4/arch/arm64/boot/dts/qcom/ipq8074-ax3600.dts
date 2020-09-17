@@ -3,12 +3,14 @@
 /* Copyright (c) 2017, The Linux Foundation. All rights reserved.
  */
 #include "ipq8074.dtsi"
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
 
 / {
 	#address-cells = <0x2>;
 	#size-cells = <0x2>;
-	model = "AX3600";
-	compatible = "qcom,ipq807x-ac04", "qcom,ipq807x";
+	model = "Xiaomi Mi AIoT Router AX3600";
+	compatible = "xiaomi,ax3600", "qcom,ipq8074", "qcom,ipq807x";
 	interrupt-parent = <&intc>;
 
 	firmware {
@@ -20,17 +22,17 @@
 	aliases {
 		serial0 = &blsp1_uart5;
 		serial1 = &blsp1_uart3;
+		led-boot = &led_system_yellow;
+		led-failsafe = &led_system_yellow;
+		led-running = &led_system_blue;
+		led-upgrade = &led_system_yellow;
 	};
 
 	chosen {
 		stdout-path = "serial0";
+		bootargs-append = " swiotlb=1 root=/dev/ubiblock0_1";
 	};
 
-	memory {
-		device_type = "memory";
-		reg = <0x0 0x40000000 0x0 0x20000000>;
-	};
-	
 	tcsr_mutex: hwlock {
 		compatible = "qcom,tcsr-mutex";
 		syscon = <&tcsr_mutex_regs 0 0x80>;
@@ -98,6 +100,12 @@
 
 	soc {
 		pinctrl@1000000 {
+			button_pins: button-pins {
+				pins = "gpio34";
+				function = "gpio";
+				bias-pull-up;
+				drive-strength = <8>;
+			};
 			led_pins: led_pins {
 				pins = "gpio42", "gpio43", "gpio21",
 				       "gpio22", "gpio51";
@@ -224,7 +232,7 @@
 						read-only;
 					};
 
-					partition8@800000 {
+					art: partition8@800000 {
 						label = "0:ART";
 						reg = <0x800000 0x80000>;
 						read-only;
@@ -866,10 +874,9 @@
 			qcom,id = <1>;
 			reg = <0x3a001000 0x200>;
 			qcom,mactype = <0>;
-			local-mac-address = [000000000000];
-			//qcom,link-poll = <1>;
 			qcom,phy-mdio-addr = <0>;
 			phy-mode = "sgmii";
+			status = "disabled";
 		};
 
 		dp2 {
@@ -878,7 +885,8 @@
 			qcom,id = <2>;
 			reg = <0x3a001200 0x200>;
 			qcom,mactype = <0>;
-			local-mac-address = [000000000000];
+			mtd-mac-address = <&art 0x6>;
+			mtd-mac-address-increment = <1>;
 			qcom,link-poll = <1>;
 			qcom,phy-mdio-addr = <1>;
 			phy-mode = "sgmii";
@@ -890,7 +898,7 @@
 			qcom,id = <3>;
 			reg = <0x3a001400 0x200>;
 			qcom,mactype = <0>;
-			local-mac-address = [000000000000];
+			mtd-mac-address = <&art 0x6>;
 			qcom,link-poll = <1>;
 			qcom,phy-mdio-addr = <2>;
 			phy-mode = "sgmii";
@@ -902,7 +910,7 @@
 			qcom,id = <4>;
 			reg = <0x3a001600 0x200>;
 			qcom,mactype = <0>;
-			local-mac-address = [000000000000];
+			mtd-mac-address = <&art 0x6>;
 			qcom,link-poll = <1>;
 			qcom,phy-mdio-addr = <3>;
 			phy-mode = "sgmii";
@@ -914,7 +922,7 @@
 			qcom,id = <5>;
 			reg = <0x3a001800 0x200>;
 			qcom,mactype = <0>;
-			local-mac-address = [000000000000];
+			mtd-mac-address = <&art 0x6>;
 			qcom,link-poll = <1>;
 			qcom,phy-mdio-addr = <4>;
 			phy-mode = "sgmii";
@@ -1220,40 +1228,47 @@
 			#interrupt-cells = <2>;
 		};
 	};
-	
+
+	keys {
+		compatible = "gpio-keys";
+		pinctrl-0 = <&button_pins>;
+		pinctrl-names = "default";
+
+		reset {
+			label = "reset";
+			gpios = <&tlmm 34 GPIO_ACTIVE_LOW>;
+			linux,code = <KEY_RESTART>;
+		};
+	};
+
 	leds {
 		compatible = "gpio-leds";
 		pinctrl-0 = <&led_pins>;
 		pinctrl-names = "default";
 
-		led_sys_blue {
-			label = "led_blue";
-			gpio = <&tlmm 42 0x0>;
-			default-state = "off";
+		led_system_blue: system-blue {
+			label = "ax3600:blue:system";
+			gpios = <&tlmm 42 GPIO_ACTIVE_HIGH>;
 		};
 
-		led_sys_yellow {
-			label = "led_yellow";
-			gpio = <&tlmm 43 0x0>;
-			default-state = "on";
+		led_system_yellow: system-yellow {
+			label = "ax3600:yellow:system";
+			gpios = <&tlmm 43 GPIO_ACTIVE_HIGH>;
 		};
 
-		led_net_blue {
-			label = "net_blue";
-			gpio = <&tlmm 21 0x0>;
-			default-state = "off";
-			};
-
-		led_net_yellow {
-			label = "net_yellow";
-			gpio = <&tlmm 22 0x0>;
-			default-state = "off";
+		network-yellow {
+			label = "ax3600:yellow:network";
+			gpios = <&tlmm 22 GPIO_ACTIVE_HIGH>;
 		};
 
-		led_ant {
-			label = "led_ant";
-			gpio = <&tlmm 51 0x0>;
-			default-state = "off";
+		network-blue {
+			label = "ax3600:blue:network";
+			gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
+		};
+
+		aiot {
+			label = "ax3600:blue:aiot";
+			gpios = <&tlmm 51 GPIO_ACTIVE_HIGH>;
 		};
 	};
 };
