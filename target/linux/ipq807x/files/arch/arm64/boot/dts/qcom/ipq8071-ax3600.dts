@@ -302,7 +302,8 @@
 	mdio@90000 {
 		pinctrl-0 = <&mdio_pins>;
 		pinctrl-names = "default";
-		phy-reset-gpio = <&tlmm 37 0>;
+		reset-gpios = <&tlmm 37 GPIO_ACTIVE_LOW>;
+		reset-delay-us = <1000>;
 		#address-cells = <1>;
 		#size-cells = <1>;
 		compatible = "qcom,ipq40xx-mdio";

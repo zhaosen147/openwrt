@@ -21,7 +21,6 @@
 #include <linux/of_mdio.h>
 #include <linux/phy.h>
 #include <linux/platform_device.h>
-#include <linux/of_gpio.h>
 
 #define MDIO_CTRL_0_REG		0x40
 #define MDIO_CTRL_1_REG		0x44
@@ -40,8 +39,6 @@
 
 #define QCA_MDIO_RETRY	1000
 #define QCA_MDIO_DELAY	10
-
-#define QCA_MAX_PHY_RESET	3
 
 struct qca_mdio_data {
 	struct mii_bus *mii_bus;
@@ -166,72 +163,11 @@ static int qca_mdio_write(struct mii_bus *bus, int mii_id, int regnum,
 	return 0;
 }
 
-static int qca_phy_gpio_set(struct platform_device *pdev, int number)
-{
-	int ret;
-
-	ret = gpio_request(number, "phy-reset-gpio");
-	if (ret) {
-		dev_err(&pdev->dev, "Can't get phy-reset-gpio %d\n", ret);
-		return ret;
-	}
-
-	ret = gpio_direction_output(number, 0x0);
-	if (ret) {
-		dev_err(&pdev->dev,
-			"Can't set direction for phy-reset-gpio %d\n", ret);
-		goto phy_reset_out;
-	}
-
-	usleep_range(100000, 110000);
-
-	gpio_set_value(number, 0x01);
-
-	usleep_range(100000, 110000);
-
-phy_reset_out:
-	gpio_free(number);
-
-	return ret;
-}
-
-static int qca_phy_reset(struct platform_device *pdev)
-{
-	struct device_node *mdio_node;
-	int phy_reset_gpio_number;
-	int ret, i;
-
-	mdio_node = of_find_node_by_name(NULL, "mdio");
-	if (!mdio_node) {
-		dev_err(&pdev->dev, "Could not find mdio node\n");
-		return -ENOENT;
-	}
-
-	for (i = 0; i < QCA_MAX_PHY_RESET; i++) {
-		ret = of_get_named_gpio(mdio_node, "phy-reset-gpio", i);
-		if (ret < 0) {
-			dev_info(&pdev->dev, "Could not find phy-reset-gpio\n");
-			return 0;
-		}
-
-		phy_reset_gpio_number = ret;
-		ret = qca_phy_gpio_set(pdev, phy_reset_gpio_number);
-		if (ret)
-			return ret;
-	}
-
-	return 0;
-}
-
 static int qca_mdio_probe(struct platform_device *pdev)
 {
 	struct qca_mdio_data *am;
 	struct resource *res;
 	int ret, i;
-
-	ret = qca_phy_reset(pdev);
-	if (ret)
-		dev_err(&pdev->dev, "Could not find qca8075 reset gpio\n");
 
 	am = devm_kzalloc(&pdev->dev, sizeof(*am), GFP_KERNEL);
 	if (!am)
