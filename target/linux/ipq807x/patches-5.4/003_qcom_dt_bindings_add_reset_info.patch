@@ -29,7 +29,7 @@ Index: linux-5.4.52/drivers/clk/qcom/gcc-ipq8074.c
 +	[GCC_NSSPORT4_RESET] = { 0x68014, 0, 0x8000300},
 +	[GCC_NSSPORT5_RESET] = { 0x68014, 0, 0x10000c00},
 +	[GCC_NSSPORT6_RESET] = { 0x68014, 0, 0x20003000},
-+	[GCC_WCSSAON_RESET] = {0x18010, 0},
++	[GCC_WCSSAON_RESET] = {0x59010, 0},
  };
  
  static const struct of_device_id gcc_ipq8074_match_table[] = {
