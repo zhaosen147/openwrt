@@ -308,6 +308,10 @@
 		compatible = "qcom,ipq40xx-mdio";
 		reg = <0x90000 0x64>;
 
+		ethernet-phy@0 {
+			reg = <0>;
+		};
+
 		ethernet-phy@1 {
 			reg = <1>;
 		};
@@ -460,7 +464,6 @@
 			port@0 {
 				port_id = <1>;
 				phy_address = <0>;
-				status = "disabled";
 			};
 
 			port@1 {
@@ -918,7 +921,6 @@
 	dp1 {
 		device_type = "network";
 		compatible = "qcom,nss-dp";
-		status = "disabled";
 		qcom,id = <1>;
 		reg = <0x3a001000 0x200>;
 		qcom,mactype = <0>;
